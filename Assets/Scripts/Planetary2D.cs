@@ -1,10 +1,14 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class PlanetaryGravity2D : MonoBehaviour {
+public class Planetary2D : MonoBehaviour {
 
-	private float absG = .98f;
+	private float absG = 9.8f;
 	private GameObject planet;
+	private Vector2 gravity;
+	private float gravityAngle;
+	private float gravitySin;
+	private float gravityCos;
 
 	// Use this for initialization
 	void Start () {
@@ -30,23 +34,23 @@ public class PlanetaryGravity2D : MonoBehaviour {
 
 //		Debug.Log ("gx:"+gravityX + "gy:"+gravityY+"d:"+d);
 
-		Vector2 gravity = new Vector2 ();
+		gravity = new Vector2 ();
 		gravity.x = gravityX;
 		gravity.y = gravityY;
 		
 		rigidbody2D.AddForce (gravity);
 
-
-		float sin = gravityY/absG;
-		float sinAngle = (Mathf.Asin(sin) * 180) / Mathf.PI;
-		sinAngle += 90;
-		Debug.Log ("sinAngle:" + sinAngle);
+		gravitySin = gravityY / absG;
+		gravityCos = gravityX / absG;
+		gravityAngle = (Mathf.Asin( gravitySin ) * 180) / Mathf.PI;
+		gravityAngle += 90;
+//		Debug.Log ("gravityAngle:" + gravityAngle);
 
 		if (gravityX < 0) {
-			sinAngle = -sinAngle;
+			gravityAngle = -gravityAngle;
 		}
 
-		transform.localRotation = Quaternion.Euler(0, 0, sinAngle);
+		transform.localRotation = Quaternion.Euler(0, 0, gravityAngle);
 
 		//adapted stand angle
 
@@ -57,5 +61,15 @@ public class PlanetaryGravity2D : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 	
+	}
+
+	public void AddForce(Vector2 force){
+		Vector2 f = new Vector2 ();
+		f.x = -force.x * gravityCos;
+		f.y = force.x * gravitySin;
+
+		Debug.Log ("f.x:" + f.x+" gravityCos:"+gravityCos+" "+force.x + " f.y:" + f.y+" "+force.y);
+
+		rigidbody2D.AddForce (f);
 	}
 }
