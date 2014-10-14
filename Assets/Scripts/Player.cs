@@ -17,7 +17,13 @@ public class Player : MonoBehaviour {
 		animator = GetComponent<Animator> ();
 
 		animator.SetInteger(keyOfState, STATE_WAIT);
+
+
+
+//		Physics2D.gravity = gravity;
 	}
+
+
 	
 	// Update is called once per frame
 	void Update () {
