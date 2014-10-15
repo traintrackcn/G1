@@ -10,11 +10,10 @@ public class Planetary2D : MonoBehaviour {
 	private float gravityCos;
 	private float gravitySin;
 
-	private Vector2 inertia;
-
 	// Use this for initialization
 	void Start () {
 		planet = GameObject.Find ("Planet");
+		Physics2D.gravity = new Vector2 ();
 	}
 
 	void FixedUpdate(){
@@ -83,10 +82,6 @@ public class Planetary2D : MonoBehaviour {
 		
 		float d = Mathf.Pow (f.x, 2) + Mathf.Pow (f.y, 2);
 		d = Mathf.Sqrt (d);
-
-
-		
-		inertia = f;
 		
 		
 		if (d != 0) {

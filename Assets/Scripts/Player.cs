@@ -4,7 +4,7 @@ using System.Collections;
 public class Player : MonoBehaviour {
 
 	private int STATE_IDLE = 0;
-	private int STATE_WAIT = 1;
+//	private int STATE_WAIT = 1;
 	private int STATE_WALK = 2;
 	private int STATE_JET = 3;
 	private string keyOfState = "AnimState";
@@ -12,24 +12,43 @@ public class Player : MonoBehaviour {
 
 	public float f = 10.0f;
 	public Vector2 maxV = new Vector2 (3.0f, 3.0f);
-	private Planetary2D planetary2d;
+	protected Planetary2D planetary2d;
 
 
 //	private Vector2 forceCache;
 	private Vector2 planetaryV;
 
 	// Use this for initialization
-	void Start () {
+	public void Start () {
 		Debug.Log("Player is created");
 		animator = GetComponent<Animator> ();
-		planetary2d = GetComponent<Planetary2D>();
+
 //		Physics2D.gravity = gravity;
+
+
+		CreateRigidbody2D ();
+		CreateScripts ();
 	}
 
+	public void CreateRigidbody2D(){
+		gameObject.AddComponent<Rigidbody2D>(); // Add the rigidbody.
 
+		rigidbody2D.gravityScale = 0; 
+		rigidbody2D.drag = .3f;
+		rigidbody2D.fixedAngle = true;
+	}
+
+	public void CreateScripts(){
+
+//		gameObject.AddComponent<AdvPlayer> ();
+
+		gameObject.AddComponent<Planetary2D>();
+		planetary2d = GetComponent<Planetary2D>();
+
+	}
 	
 	// Update is called once per frame
-	void Update () {
+	public void Update () {
 
 		planetaryV = planetary2d.velocity;
 
