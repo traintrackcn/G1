@@ -96,7 +96,7 @@ public class Planetary2D : MonoBehaviour {
 			Debug.DrawLine (transform.position, new Vector3(transform.position.x,transform.position.y+rigidbody2D.velocity.y,0));
 			Debug.DrawLine (transform.position, new Vector3(transform.position.x+rigidbody2D.velocity.x,transform.position.y+rigidbody2D.velocity.y,0), Color.green);
 
-			Vector2 v = this.velocity;
+//			Vector2 v = this.velocity;
 //
 //			float xOutSpace = (transform.position.x + v.x);
 //			float dOutSpace = xOutSpace / gravityCos;
@@ -104,7 +104,7 @@ public class Planetary2D : MonoBehaviour {
 //
 //			Debug.Log("gravitySin -> "+gravitySin);
 
-			Debug.Log("planet2d v.x -> "+v.x+" v.y -> "+v.y);
+//			Debug.Log("planet2d v.x -> "+v.x+" v.y -> "+v.y);
 
 //
 //			Debug.DrawLine (transform.position, new Vector3(transform.position.x + xOutSpace, transform.position.y+yOutSpace,0), Color.cyan);
