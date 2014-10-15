@@ -9,6 +9,7 @@ public class Planetary2D : MonoBehaviour {
 	private float gravityAngle;
 	private float gravitySin;
 	private float gravityCos;
+	private float gravityTan;
 
 	// Use this for initialization
 	void Start () {
@@ -21,16 +22,18 @@ public class Planetary2D : MonoBehaviour {
 		float distanceXToPlanetCenter = planet.transform.position.x - transform.position.x;
 		float distanceToPlanetCenter = Vector3.Distance (transform.position, planet.transform.position);
 
-		Debug.DrawLine (transform.position, planet.transform.position);
+//		Debug.DrawLine (transform.position, planet.transform.position, Color.red);
 
-//		float sin = Mathf.Sin (distanceYToPlanetCenter / distanceToPlanetCenter);
-//		float cos = Mathf.Cos (distanceXToPlanetCenter / distanceToPlanetCenter);
+		gravityCos = distanceXToPlanetCenter / distanceToPlanetCenter;
+		gravitySin = distanceYToPlanetCenter / distanceToPlanetCenter;
 
-		float gravityX = (distanceXToPlanetCenter / distanceToPlanetCenter) * absG;
-		float gravityY = (distanceYToPlanetCenter / distanceToPlanetCenter) * absG;
+		float gravityX = gravityCos * absG;
+		float gravityY = gravitySin * absG;
 
-		float d = Mathf.Pow (gravityX, 2) + Mathf.Pow (gravityY, 2);
-		d = Mathf.Sqrt (d);
+
+		Debug.DrawLine (transform.position, new Vector3(transform.position.x+gravityX, transform.position.y+gravityY,0), Color.red);
+//		float d = Mathf.Pow (gravityX, 2) + Mathf.Pow (gravityY, 2);
+//		d = Mathf.Sqrt (d);
 
 //		Debug.Log ("gx:"+gravityX + "gy:"+gravityY+"d:"+d);
 
@@ -40,11 +43,9 @@ public class Planetary2D : MonoBehaviour {
 		
 		rigidbody2D.AddForce (gravity);
 
-		gravitySin = gravityY / absG;
-		gravityCos = gravityX / absG;
 		gravityAngle = (Mathf.Asin( gravitySin ) * 180) / Mathf.PI;
 		gravityAngle += 90;
-//		Debug.Log ("gravityAngle:" + gravityAngle);
+
 
 		if (gravityX < 0) {
 			gravityAngle = -gravityAngle;
@@ -65,10 +66,27 @@ public class Planetary2D : MonoBehaviour {
 
 	public void AddForce(Vector2 force){
 		Vector2 f = new Vector2 ();
-		f.x = -force.x * gravityCos;
-		f.y = force.x * gravitySin;
+		float forceXInVerticalG = force.x;
+		f.x = forceXInVerticalG * -gravitySin;
+		f.y = forceXInVerticalG * gravityCos;
 
-		Debug.Log ("f.x:" + f.x+" gravityCos:"+gravityCos+" "+force.x + " f.y:" + f.y+" "+force.y);
+//		Debug.DrawRay (transform.position, new Vector3(force.x,0,0));
+//		Planet p = GetComponent<Player> ();
+
+
+		float d = Mathf.Pow (f.x, 2) + Mathf.Pow (f.y, 2);
+		d = Mathf.Sqrt (d);
+
+
+
+		if (d != 0) {
+//			Debug.DrawRay (transform.position, new Vector3(transform.position.x+f.x,0,0));
+			Debug.DrawLine (transform.position, new Vector3(transform.position.x+f.x,transform.position.y,0));
+			Debug.DrawLine (transform.position, new Vector3(transform.position.x,transform.position.y+f.y,0));
+			Debug.DrawLine (transform.position, new Vector3(transform.position.x+f.x,transform.position.y+f.y,0), Color.green);
+			Debug.Log ("forceXInVerticalG:"+forceXInVerticalG+" force value -> "+ d);
+		}
+
 
 		rigidbody2D.AddForce (f);
 	}

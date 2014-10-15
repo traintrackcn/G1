@@ -10,8 +10,9 @@ public class Player : MonoBehaviour {
 	private string keyOfState = "AnimState";
 	private Animator animator;
 
-	public float speed = 100.0f;
-	public Vector2 maxV = new Vector2 (3, 5);
+	public float speed = 10.0f;
+	public Vector2 maxV = new Vector2 (1, 2);
+	private Planetary2D planetary2d;
 
 
 	// Use this for initialization
@@ -22,7 +23,7 @@ public class Player : MonoBehaviour {
 		animator.SetInteger(keyOfState, STATE_WALK);
 
 
-
+		planetary2d = GetComponent<Planetary2D>();
 //		Physics2D.gravity = gravity;
 	}
 
@@ -49,9 +50,6 @@ public class Player : MonoBehaviour {
 			transform.localScale = new Vector3 (-1,1,1);
 		}
 
-		Debug.Log (forceX);
-
-		Planetary2D planetary2d = GetComponent<Planetary2D>();
-		planetary2d.AddForce(new Vector2(forceX, forceY));
+		planetary2d.AddForce(new Vector2(forceX, 0));
 	}
 }
