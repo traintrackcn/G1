@@ -62,11 +62,11 @@ public class PlayerController : MonoBehaviour {
 	}
 
 	public void ActionUp(){
-		if(Mathf.Abs(planetaryV.y) < maxV.y){
+//		if(Mathf.Abs(planetaryV.y) < maxV.y){
 //			Debug.Log("planetary2d:"+planetary2d);
 			planetary2d.AddForce(new Vector2(0,f));
 			SetState(STATE_JET);
-		}
+//		}
 	}
 
 	public void ActionIdle(){
