@@ -40,6 +40,8 @@ public class Planetary2D : MonoBehaviour {
 		gravity = new Vector2 ();
 		gravity.x = gravityX;
 		gravity.y = gravityY;
+
+		gravity *= rigidbody2D.mass;
 		
 		rigidbody2D.AddForce (gravity);
 
