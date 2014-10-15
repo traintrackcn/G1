@@ -10,19 +10,18 @@ public class Player : MonoBehaviour {
 	private string keyOfState = "AnimState";
 	private Animator animator;
 
-	public float speed = 10.0f;
-	public Vector2 maxV = new Vector2 (1, 2);
+	public float f = 10.0f;
+	public Vector2 maxV = new Vector2 (3.0f, 3.0f);
 	private Planetary2D planetary2d;
 
+
+//	private Vector2 forceCache;
+	private Vector2 planetaryV;
 
 	// Use this for initialization
 	void Start () {
 		Debug.Log("Player is created");
 		animator = GetComponent<Animator> ();
-
-		animator.SetInteger(keyOfState, STATE_WALK);
-
-
 		planetary2d = GetComponent<Planetary2D>();
 //		Physics2D.gravity = gravity;
 	}
@@ -32,24 +31,65 @@ public class Player : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 
-		float forceX = 0f;
-		float forceY = 0f;
-		float absVX = Mathf.Abs (rigidbody2D.velocity.x);
+		planetaryV = planetary2d.velocity;
 
 		if (Input.GetKey ("right")) {
-			if(absVX<maxV.x){
-				forceX = speed;
-			}
-
-			transform.localScale = new Vector3 (1,1,1);
-		}else if (Input.GetKey("left")){
-			if(absVX<maxV.x){
-				forceX = -speed;
-			}
-
-			transform.localScale = new Vector3 (-1,1,1);
+			OnPressRight();
+		} else if (Input.GetKey ("left")) {
+			OnPressLeft();
+		} else if (Input.GetKey ("up")) {
+			OnPressUp();
+		}else{
+			animator.SetInteger(keyOfState, STATE_IDLE);
 		}
 
-		planetary2d.AddForce(new Vector2(forceX, 0));
+
+
 	}
+
+
+	void OnPressLeft (){
+
+//		Debug.Log ("Mathf.Abs(planetaryV.x:"+Mathf.Abs(planetaryV.x)+ " maxV.x:"+maxV.x);
+
+			if (Mathf.Abs(planetaryV.x) < maxV.x) {
+//				forceCache.x = -force;
+				planetary2d.AddForce(new Vector2(-f,0));
+				animator.SetInteger(keyOfState, STATE_WALK);
+			}
+			
+			
+			if (Input.GetKey ("up")) {
+				OnPressUp();
+			}
+			
+			transform.localScale = new Vector3 (-1, 1, 1);
+
+
+
+	}
+
+	void OnPressRight (){
+
+			if (Mathf.Abs(planetaryV.x) < maxV.x) {
+			planetary2d.AddForce(new Vector2(f,0));
+			animator.SetInteger(keyOfState, STATE_WALK);
+			}
+			
+			if (Input.GetKey ("up")) {
+				OnPressUp();
+			}
+			
+			transform.localScale = new Vector3 (1, 1, 1);
+
+
+	}
+
+	void OnPressUp (){
+		if(Mathf.Abs(planetaryV.y) < maxV.y){
+			planetary2d.AddForce(new Vector2(0,f));
+			animator.SetInteger(keyOfState, STATE_JET);
+		}
+	}
+
 }
