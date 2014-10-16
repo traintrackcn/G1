@@ -26,6 +26,7 @@ public class PlayerController : MonoBehaviour {
 		animator = GetComponent<Animator> ();
 		gameObject.AddComponent<Planetary2D>();
 		planetary2d = GetComponent<Planetary2D>();
+		planetary2d.fixedAngle = true;
 	}
 	
 	// Update is called once per frame

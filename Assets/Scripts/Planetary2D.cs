@@ -10,10 +10,13 @@ public class Planetary2D : MonoBehaviour {
 	private float gravityCos;
 	private float gravitySin;
 
+	public bool fixedAngle = false;
+
 	// Use this for initialization
 	void Start () {
 		planet = GameObject.Find ("Planet");
-		Physics2D.gravity = new Vector2 ();
+//		Physics2D.gravity = new Vector2 ();
+		rigidbody2D.gravityScale = 0;
 	}
 
 	void FixedUpdate(){
@@ -46,20 +49,25 @@ public class Planetary2D : MonoBehaviour {
 		
 		rigidbody2D.AddForce (gravity);
 
+
+
+
+		ApplyFixedAngle ();
+
+	}
+
+	void ApplyFixedAngle (){
+		if(!fixedAngle) return;
+
 		gravityAngle = (Mathf.Asin( gravitySin ) * 180) / Mathf.PI;
 		gravityAngle += 90;
-
-
-		if (gravityX < 0) {
+		
+		
+		if (gravity.x < 0) {
 			gravityAngle = -gravityAngle;
 		}
-
+		
 		transform.localRotation = Quaternion.Euler(0, 0, gravityAngle);
-
-		//adapted stand angle
-
-//		transform.localRotation = Quaternion.Euler (gravityX, gravityY, 0);
-
 	}
 
 	// Update is called once per frame
