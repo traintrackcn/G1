@@ -15,7 +15,6 @@ public class Planetary2D : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		planet = GameObject.Find ("Planet");
-//		Physics2D.gravity = new Vector2 ();
 		rigidbody2D.gravityScale = 0;
 	}
 
