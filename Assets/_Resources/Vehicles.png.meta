@@ -3,6 +3,7 @@ guid: faf4a07bd5cbe4af2b4954c2597f0015
 TextureImporter:
   fileIDToRecycleName:
     21300000: Vehicles_0
+    21300002: Vehicles_1
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0
@@ -51,6 +52,16 @@ TextureImporter:
         y: 763
         width: 207
         height: 81
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Vehicles_1
+      rect:
+        serializedVersion: 2
+        x: 236
+        y: 346
+        width: 195
+        height: 59
       alignment: 0
       pivot: {x: .5, y: .5}
       border: {x: 0, y: 0, z: 0, w: 0}

@@ -25,12 +25,12 @@ public class Player : MonoBehaviour {
 	}
 
 
-	void OnTriggerEnter2D(Collider2D target){
-		Debug.Log (target);
-	}
-
-	void OnCollisionEnter2D(Collider2D target){
-		Debug.Log (target);
-	}
+//	void OnTriggerEnter2D(Collider2D target){
+//		Debug.Log (target);
+//	}
+//
+//	void OnCollisionEnter2D(Collider2D target){
+//		Debug.Log (target);
+//	}
 
 }
