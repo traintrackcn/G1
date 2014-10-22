@@ -10,6 +10,13 @@ public class Planet : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		Debug.DrawLine(transform.position, new Vector3(transform.position.x, transform.position.y + 20, 0), Color.blue);
+//		Debug.DrawLine(transform.position, new Vector3(transform.position.x, transform.position.y + 20, 0), Color.blue);
+	}
+
+
+
+	public void Add (GameObject obj, float position){
+//		GameObject obj = new cls();
+
 	}
 }

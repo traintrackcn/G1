@@ -1,8 +1,8 @@
 fileFormatVersion: 2
-guid: f6785dce2395642e6a416159f9a52bbb
+guid: 098322aa3b8e84396803aaea6e0167b6
 TextureImporter:
   fileIDToRecycleName:
-    21300000: 038465-glossy-black-icon-transport-travel-wheel_0
+    21300000: "\u8F66\u8F6E_0"
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0
@@ -22,7 +22,7 @@ TextureImporter:
   grayScaleToAlpha: 0
   generateCubemap: 0
   seamlessCubemap: 0
-  textureFormat: -1
+  textureFormat: -3
   maxTextureSize: 1024
   textureSettings:
     filterMode: -1
@@ -38,19 +38,19 @@ TextureImporter:
   alignment: 0
   spritePivot: {x: .5, y: .5}
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
-  spritePixelsToUnits: 500
+  spritePixelsToUnits: 400
   alphaIsTransparency: 1
   textureType: 8
   buildTargetSettings: []
   spriteSheet:
     sprites:
-    - name: 038465-glossy-black-icon-transport-travel-wheel_0
+    - name: "\u8F66\u8F6E_0"
       rect:
         serializedVersion: 2
-        x: 81
-        y: 82
-        width: 348
-        height: 348
+        x: 193
+        y: 145
+        width: 93
+        height: 92
       alignment: 0
       pivot: {x: .5, y: .5}
       border: {x: 0, y: 0, z: 0, w: 0}

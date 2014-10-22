@@ -34,7 +34,7 @@ public class LocomotiveController : MonoBehaviour {
 
 				if (Mathf.Abs (planetaryV.x) < maxVelocity) {
 						planetary2d.AddForce (new Vector2 (f, 0));
-						transform.localScale = new Vector3 (-1, 1, 1);
+						transform.localScale = new Vector3 (1, 1, 1);
 				}
 		}
 
