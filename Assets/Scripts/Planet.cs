@@ -9,6 +9,8 @@ public class Planet : MonoBehaviour {
 	void Start () {
 		CircleCollider2D collider2d = GetComponent<CircleCollider2D> ();
 		r = collider2d.radius * transform.localScale.x;
+
+		Debug.Log ("r -> " + r);
 	}
 	
 	// Update is called once per frame
