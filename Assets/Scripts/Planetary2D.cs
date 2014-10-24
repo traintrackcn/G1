@@ -1,10 +1,11 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Planetary2D : MonoBehaviour {
+public class Planetary2D : G1MonoBehaviour {
 
 	private float absG = 9.8f;
-	private GameObject planet;
+	private GameObject planetGO;
+
 	private Vector2 gravity;
 	private float gravityAngle;
 	private float gravityCos;
@@ -13,18 +14,19 @@ public class Planetary2D : MonoBehaviour {
 	public bool fixedAngle = false;
 
 	// Use this for initialization
-	void Start () {
-		planet = GameObject.Find ("Planet");
+	new void Start () {
+		base.Start ();
+		planetGO = planetM.defaultPlanetGO;
 		rigidbody2D.gravityScale = 0;
 	}
 
 	void FixedUpdate(){
 
-		float distanceYToPlanetCenter =  planet.transform.position.y - transform.position.y;
-		float distanceXToPlanetCenter = planet.transform.position.x - transform.position.x;
-		float distanceToPlanetCenter = Vector3.Distance (transform.position, planet.transform.position);
+		float distanceYToPlanetCenter =  planetGO.transform.position.y - transform.position.y;
+		float distanceXToPlanetCenter = planetGO.transform.position.x - transform.position.x;
+		float distanceToPlanetCenter = Vector3.Distance (transform.position, planetGO.transform.position);
 
-		Debug.DrawLine (transform.position, planet.transform.position, Color.red);
+//		Debug.DrawLine (transform.position, planetGO.transform.position, Color.red);
 
 		gravityCos = distanceXToPlanetCenter / distanceToPlanetCenter;
 		gravitySin = distanceYToPlanetCenter / distanceToPlanetCenter;
@@ -179,7 +181,7 @@ public class Planetary2D : MonoBehaviour {
 
 	public float FirstCosmicVelocity {
 		get{
-			float distanceToPlanetCenter = Vector3.Distance (transform.position, planet.transform.position);
+			float distanceToPlanetCenter = Vector3.Distance (transform.position, planetGO.transform.position);
 			float v = Mathf.Sqrt (absG * distanceToPlanetCenter);
 			return v;
 		}

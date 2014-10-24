@@ -14,6 +14,8 @@ public class Camera : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 //		transform.LookAt (locomotive.transform.position);
-		transform.position = new Vector3(target.transform.position.x, target.transform.position.y, -10);
+		if (target != null) {
+			transform.position = new Vector3 (target.transform.position.x, target.transform.position.y, -10);
+		}
 	}
 }

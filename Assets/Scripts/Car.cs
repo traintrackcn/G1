@@ -14,6 +14,15 @@ public class Car : MonoBehaviour {
 	
 	}
 
+	public GameObject[] wheels{
+		get{
+
+		}
+	}
+
+	public void Brake(){
+	}
+
 	public void Connect (Car obj){
 
 		if (connector) {
