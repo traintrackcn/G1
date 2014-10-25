@@ -1,14 +1,24 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class G1MonoBehaviour : MonoBehaviour {
 
 	protected PlanetManager planetM;
+	protected ResourceManager resourceM;
 	protected Camera camera;
+
+	private GameObject m;
+	private GameObject c;
+
 	// Use this for initialization
 	public void Start () {
-		planetM = GameObject.Find ("Main").GetComponent<PlanetManager> ();
-		camera = GameObject.Find ("Camera").GetComponent<Camera> ();
+		m = GameObject.Find ("Main");
+		c = GameObject.Find ("Camera");
+
+		planetM = m.GetComponent<PlanetManager> ();
+		resourceM = m.GetComponent<ResourceManager> ();
+		camera = c.GetComponent<Camera> ();
 	}
 
 	// Update is called once per frame
@@ -16,9 +26,10 @@ public class G1MonoBehaviour : MonoBehaviour {
 	
 	}
 
-	public GameObject CloneGameObjectFromPrefab(string name){
-		//prefabs must be placed under Assets/Resources
-		string path = "Prefabs/" + name;
-		return Instantiate (Resources.Load (path)) as GameObject;
+
+
+
+	public float RadianOfAngle(float angle){
+		return (angle *  Mathf.PI)/180.0f;
 	}
 }

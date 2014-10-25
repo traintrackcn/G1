@@ -11,8 +11,8 @@ public class Main : G1MonoBehaviour {
 		float offset = 360 / num;
 		float angle = 0;
 		for (int i =0; i<num; i++) {
-			GameObject carGO = base.CloneGameObjectFromPrefab ("Car");
-			planetM.defaultPlanet.Set (carGO, angle, .28f);
+			GameObject carGO = resourceM.Create ("Car");
+			planetM.defaultPlanet.Set (carGO, angle, .25f);
 			camera.target = carGO;
 			angle += offset;
 

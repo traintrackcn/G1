@@ -1,23 +1,28 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Planet : MonoBehaviour {
+public class Planet : G1MonoBehaviour {
 
 
 	public float r = 22.4f;
 	// Use this for initialization
-	void Start () {
+	new void Start () {
+		base.Start ();
 		AssembleSolidSurface ();
 	}
 	
 
-	public void Set (GameObject obj, float angle, float heightToCenter){
-		float radian = (angle *  Mathf.PI)/180.0f;
+	public void Set (GameObject obj, float angle, float landToCenter){
+		float radian = RadianOfAngle(angle);
+
+//		Transform anchorTransform = obj.transform.GetChild (0);
+//		heightToCenter = Mathf.Abs (anchorTransform.localPosition.y);
+//		Debug.Log ("heightToCenter->"+heightToCenter);
 
 		float cos = Mathf.Cos (radian);
 		float sin = Mathf.Sin (radian);
-		float offsetX = heightToCenter * cos;
-		float offsetY = heightToCenter * sin;
+		float offsetX = landToCenter * cos;
+		float offsetY = landToCenter * sin;
 
 		Vector2 pos = GetPositionAtAngle(angle);
 		obj.transform.position = new Vector2(pos.x+ offsetX,pos.y+ offsetY);
@@ -28,19 +33,23 @@ public class Planet : MonoBehaviour {
 	void AssembleSolidSurface(){
 		for (int angle =0; angle<=359; angle++) {
 			GameObject obj = AssemblePlateAtAngle (angle);
-			obj.name = "Plate-"+angle;
+			obj.name = "Land-"+angle;
 			obj.transform.parent = transform;
 		}
 	}
 
 	public GameObject AssemblePlateAtAngle(float angle){
-		GameObject obj = new GameObject ();
-		obj.AddComponent<BoxCollider2D>();
-		BoxCollider2D boxCollider = obj.GetComponent<BoxCollider2D> ();
-		float w = (2.0f * Mathf.PI * r) / 360.0f;
-		boxCollider.size = new Vector2 (w, 0.1f);
+		GameObject obj = resourceM.Create("Land"); 
+		BoxCollider2D collider = obj.GetComponent<BoxCollider2D> ();
 
-		float heightFromBottomToCenter = obj.transform.localScale.y * boxCollider.size.y/2.0f;
+		float wActual = (2.0f * Mathf.PI * r) / 360.0f;
+		float hActural = .1f;
+
+		float xScale = wActual / collider.size.x;
+		float yScale = hActural / collider.size.y;
+
+		float heightFromBottomToCenter = hActural/2.0f;
+		obj.transform.localScale = new Vector2 (xScale, yScale);
 
 		Vector2 pos = GetPositionAtAngle(angle);
 		obj.transform.position = new Vector2(pos.x ,pos.y-heightFromBottomToCenter);
@@ -61,7 +70,7 @@ public class Planet : MonoBehaviour {
 
 	public Vector2 GetPositionAtAngle (float angle){
 
-		float radian = (angle *  Mathf.PI)/180.0f;
+		float radian = RadianOfAngle (angle);
 
 		Vector2 pos = new Vector2 (0, 0);
 		float cos = Mathf.Cos (radian);
