@@ -1,9 +1,12 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class CarConnector : MonoBehaviour {
+public class RailroadCoupler : MonoBehaviour {
 
-	BoxCollider2D collider2d;
+	public BoxCollider2D mainCollider;
+	public WheelJoint2D rightJoint;
+	public WheelJoint2D leftJoint;
+
 
 	// Use this for initialization
 	void Start () {
@@ -16,7 +19,7 @@ public class CarConnector : MonoBehaviour {
 	
 	}
 
-	public void Bind(Car master, Car slave){
+	public void Bind(RailroadCar master, RailroadCar slave){
 //		WheelJoint2D joint2d = new WheelJoint2D ();
 //		joint2d.anchor
 	}

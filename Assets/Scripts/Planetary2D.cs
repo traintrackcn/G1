@@ -14,8 +14,8 @@ public class Planetary2D : G1MonoBehaviour {
 	public bool fixedAngle = false;
 
 	// Use this for initialization
-	new void Start () {
-		base.Start ();
+	void Start () {
+//		base.Start ();
 		planetGO = planetM.defaultPlanetGO;
 		rigidbody2D.gravityScale = 0;
 	}

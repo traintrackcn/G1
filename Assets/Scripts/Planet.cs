@@ -5,12 +5,21 @@ public class Planet : G1MonoBehaviour {
 
 
 	public float r = 22.4f;
+	protected float c = 2 * Mathf.PI *22.4f;
+
+
+//	void Awake(){
+//		base.Awake ();
+//	}
 	// Use this for initialization
-	new void Start () {
-		base.Start ();
+	void Start () {
 		AssembleSolidSurface ();
 	}
-	
+
+/** main ops **/
+	public void Set (GameObject obj, float angle){
+		Set (obj, angle, 0);
+	}
 
 	public void Set (GameObject obj, float angle, float landToCenter){
 		float radian = RadianOfAngle(angle);
@@ -28,6 +37,15 @@ public class Planet : G1MonoBehaviour {
 		obj.transform.position = new Vector2(pos.x+ offsetX,pos.y+ offsetY);
 		obj.transform.localRotation = Quaternion.Euler(0, 0, angle-90);
 	}
+
+	public float GetAngleByDistance(float angleRef, float distance){
+//		Debug.Log ("c:" + c);
+		float angleOffset = (distance/c )*360 ;
+		return angleRef + angleOffset;
+	}
+
+
+/** interal functions **/
 
 	//for test purpose
 	void AssembleSolidSurface(){

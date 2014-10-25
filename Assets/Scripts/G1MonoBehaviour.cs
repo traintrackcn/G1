@@ -6,20 +6,28 @@ public class G1MonoBehaviour : MonoBehaviour {
 
 	protected PlanetManager planetM;
 	protected ResourceManager resourceM;
-	protected Camera camera;
+//	protected Camera camera;
 
 	private GameObject m;
-	private GameObject c;
+//	private GameObject c;
 
-	// Use this for initialization
-	public void Start () {
+
+	public void Awake(){
 		m = GameObject.Find ("Main");
-		c = GameObject.Find ("Camera");
-
 		planetM = m.GetComponent<PlanetManager> ();
 		resourceM = m.GetComponent<ResourceManager> ();
-		camera = c.GetComponent<Camera> ();
 	}
+	
+
+	// Use this for initialization
+//	public void Start () {
+//		m = GameObject.Find ("Main");
+//		c = GameObject.Find ("Camera");
+
+//		planetM = m.GetComponent<PlanetManager> ();
+//		resourceM = m.GetComponent<ResourceManager> ();
+//		camera = c.GetComponent<Camera> ();
+//	}
 
 	// Update is called once per frame
 	void Update () {
