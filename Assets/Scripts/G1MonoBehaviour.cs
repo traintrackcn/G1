@@ -17,7 +17,7 @@ public class G1MonoBehaviour : MonoBehaviour {
 		planetM = m.GetComponent<PlanetManager> ();
 		resourceM = m.GetComponent<ResourceManager> ();
 	}
-	
+
 
 	// Use this for initialization
 //	public void Start () {

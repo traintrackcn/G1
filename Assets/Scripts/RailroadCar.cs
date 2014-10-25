@@ -6,6 +6,7 @@ public class RailroadCar : G1MonoBehaviour {
 	public BoxCollider2D mainCollider;
 	public Rigidbody2D mainRigidbody;
 	public DistanceJoint2D couplerJoint;
+	public GameObject mainBodyGO;
 	public Vector2 couplerHole;
 	public float landToCenter;
 
@@ -13,7 +14,7 @@ public class RailroadCar : G1MonoBehaviour {
 
 	new void Awake(){
 		base.Awake ();
-		couplerHole  = new Vector2(mainCollider.size.x/2.0f, -mainCollider.size.y/2.0f);
+		couplerHole  = new Vector2(mainCollider.size.x/2.0f,0);
 	}
 
 	// Use this for initialization
@@ -67,7 +68,7 @@ public class RailroadCar : G1MonoBehaviour {
 			nextCarGO.transform.localScale= new Vector3(-1,1,1);
 		}
 		
-		Debug.Log ("nextCarAngle:" + nextCarAngle);
+//		Debug.Log ("nextCarAngle:" + nextCarAngle);
 
 //		planet.Set (couplerGO, couplerAngle, .1f);
 		planet.Set ( nextCarGO , nextCarAngle, landToCenter);

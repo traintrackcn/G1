@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class LocomotiveController : MonoBehaviour {
+public class Locomotive : MonoBehaviour {
 	protected Planetary2D planetary2d;
 	protected Vector2 planetaryV;
 	public float f = 1000;
@@ -9,10 +9,14 @@ public class LocomotiveController : MonoBehaviour {
 
 	public bool brake = false;
 
+
+	void Awake(){
+	}
+
 	// Use this for initialization
 	void Start(){
 		planetary2d = GetComponent<Planetary2D>();
-		planetary2d.fixedAngle = true;
+//		planetary2d.fixedAngle = true;
 	}
 
 	void FixedUpdate (){

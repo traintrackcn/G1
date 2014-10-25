@@ -19,7 +19,6 @@ public class Main : G1MonoBehaviour {
 
 		//creating a train
 		GameObject trainGO = resourceM.Create ("Train");
-//		Train train = trainGO.GetComponent<Train>();
 		planetM.defaultPlanet.Set (  trainGO , 90);
 
 
