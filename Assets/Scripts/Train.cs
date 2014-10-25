@@ -7,9 +7,9 @@ public class Train : G1MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		SetLocomotive ("RailroadCar", 90, true);
+		SetLocomotive ("RailroadCar", 90, false);
 
-		for (int i=0; i<2; i++) {
+		for (int i=0; i<10; i++) {
 						SetCar ("RailroadCar");
 				}
 	}
@@ -24,6 +24,7 @@ public class Train : G1MonoBehaviour {
 		RailroadCar car = carGO.GetComponent<RailroadCar> ();
 		planetM.defaultPlanet.Set (carGO, angle, car.landToCenter);
 		car.headRight = headRight;
+		if(!headRight) car.transform.localScale = new Vector3(-1,1,1);
 		caboose = car;
 		caboose.transform.parent = transform;
 	}

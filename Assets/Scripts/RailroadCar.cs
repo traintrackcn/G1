@@ -64,6 +64,7 @@ public class RailroadCar : G1MonoBehaviour {
 			nextCarAngle = planet.GetAngleByDistance (angleRef, distanceBetweenCars);
 		}else{
 			nextCarAngle = planet.GetAngleByDistance (angleRef, -distanceBetweenCars);
+			nextCarGO.transform.localScale= new Vector3(-1,1,1);
 		}
 		
 		Debug.Log ("nextCarAngle:" + nextCarAngle);
@@ -80,7 +81,9 @@ public class RailroadCar : G1MonoBehaviour {
 			couplerJoint.connectedBody = nextCar.mainRigidbody;
 			couplerJoint.connectedAnchor = couplerHole;
 		}else{
-
+			couplerJoint.enabled = true;
+			couplerJoint.connectedBody = nextCar.mainRigidbody;
+			couplerJoint.connectedAnchor = couplerHole;
 		}
 
 		return nextCar;
