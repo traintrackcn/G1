@@ -32,9 +32,10 @@ public class Train : G1MonoBehaviour {
 		cameraM.target = carGO;
 
 		if (!headRight) {
-			l.f = -1;
+			l.f = -10;
+			car.body.skin.transform.localScale = new Vector3(-1,1,1);
 		} else {
-			l.f = 1;
+			l.f = 10;
 		}
 
 

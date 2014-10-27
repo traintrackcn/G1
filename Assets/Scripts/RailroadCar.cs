@@ -154,6 +154,10 @@ public class RailroadCar : G1MonoBehaviour {
 			nextCarAngle = planet.GetAngleByDistance (angleRef, -distanceBetweenCars);
 //			nextCarGO.transform.localScale= new Vector3(-1,1,1);
 			//mask body skin scale.x = -1 , most situation is for lomotive
+
+//			Debug.Log("nextCar.body.skin -> "+nextCar.body.skin);
+
+			nextCar.body.skin.transform.localScale = new Vector3(-1,1,1);
 		}
 		
 //		Debug.Log ("nextCarAngle:" + nextCarAngle);

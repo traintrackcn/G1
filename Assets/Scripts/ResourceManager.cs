@@ -25,7 +25,7 @@ public class ResourceManager : MonoBehaviour {
 		if (resourceCache.ContainsKey (path)) {
 			resource = resourceCache [path];
 		}else{
-			Debug.Log("loading path -> "+path);
+//			Debug.Log("loading path -> "+path);
 			resource = Resources.Load(path);
 			resourceCache.Add(path, resource);
 		} 

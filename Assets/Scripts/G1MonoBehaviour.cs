@@ -44,12 +44,13 @@ public class G1MonoBehaviour : MonoBehaviour {
 	
 	}
 	
-	public void ApplySkin(GameObject target, Object skinPrefab){
+	public GameObject ApplySkin(GameObject target, Object skinPrefab){
 		GameObject skin = Instantiate (skinPrefab) as GameObject;
 		skin.transform.parent = target.transform;
 		skin.transform.localPosition = new Vector2 (0, 0);
 		skin.transform.localScale = Vector2.one;
 		skin.transform.localRotation = Quaternion.identity;
+		return skin;
 	}
 
 	public float RadianOfAngle(float angle){
