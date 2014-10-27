@@ -9,7 +9,7 @@ public class G1MonoBehaviour : MonoBehaviour {
 	protected Camera cameraM;
 
 	private GameObject m;
-	private GameObject c;
+	private GameObject cameraGO;
 
 
 	public void Awake(){
@@ -21,9 +21,9 @@ public class G1MonoBehaviour : MonoBehaviour {
 			resourceM = m.GetComponent<ResourceManager> ();
 		}
 
-		c = GameObject.Find ("Camera");
+		cameraGO = GameObject.Find ("Camera");
 		if (m != null) {
-			cameraM = c.GetComponent<Camera> ();
+			cameraM = cameraGO.GetComponent<Camera> ();
 		}
 
 	}

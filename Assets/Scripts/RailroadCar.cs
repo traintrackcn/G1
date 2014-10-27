@@ -5,6 +5,7 @@ public class RailroadCar : G1MonoBehaviour {
 
 	public BoxCollider2D chasisCollider;
 	public BoxCollider2D bodyCollider;
+
 	public DistanceJoint2D couplerJoint;
 
 	public Vector2 couplerHole;
@@ -15,6 +16,8 @@ public class RailroadCar : G1MonoBehaviour {
 	
 	public GameObject[] wheelGOs;
 	public GameObject bodyGO;
+
+	public RailroadCarBody body;
 
 	public bool headRight;
 
@@ -36,9 +39,9 @@ public class RailroadCar : G1MonoBehaviour {
 		float x = 0;
 		float y = 0;
 
-		GameObject bodyGO = Instantiate(bodyPrefab) as GameObject;
+		bodyGO = Instantiate(bodyPrefab) as GameObject;
 		bodyCollider = bodyGO.GetComponent<BoxCollider2D> ();
-		RailroadCarBody body = bodyGO.GetComponent<RailroadCarBody> ();
+		body = bodyGO.GetComponent<RailroadCarBody> ();
 
 		y = chasisCollider.size.y / 2.0f + bodyCollider.size.y / 2.0f + body.offsetY;
 
@@ -64,12 +67,12 @@ public class RailroadCar : G1MonoBehaviour {
 			wheelGOs[i] = wheelGO;
 
 			if (i== 0)  {
-				x = chasisMaxX - wheelR;
+				x = chasisMaxX - wheelR - body.offsetX;
 				spacing = wheelR*1.0f;
 			}
 
 			if (i == 2){
-				x = chasisMinX + 3*wheelR + spacing;
+				x = chasisMinX + 3*wheelR + spacing + body.offsetX;
 			}
 
 			wheelGO.transform.parent = transform;

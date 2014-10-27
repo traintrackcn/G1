@@ -3,7 +3,8 @@ using System.Collections;
 
 public class RailroadCarBody : G1MonoBehaviour {
 
-	public float offsetY = 0.1f;
+	public float offsetY = .1f;
+	public float offsetX = .4f;
 	public Object skinPrefab;
 
 
