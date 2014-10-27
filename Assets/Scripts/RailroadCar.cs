@@ -8,8 +8,6 @@ public class RailroadCar : G1MonoBehaviour {
 
 	public DistanceJoint2D couplerJoint;
 
-	public Vector2 couplerHole;
-
 	public Object wheelPrefab;
 	public float wheelR;
 	public Object bodyPrefab;
@@ -21,11 +19,17 @@ public class RailroadCar : G1MonoBehaviour {
 
 	public bool headRight;
 
+	public Vector2 chasisEdgeR;
+	public Vector2 chasisEdgeL;
+
 	new void Awake(){
 		base.Awake ();
 		chasisCollider = GetComponent<BoxCollider2D> ();
 		couplerJoint = GetComponent<DistanceJoint2D> ();
-		couplerHole  = new Vector2(chasisCollider.size.x/2.0f,0);
+
+		chasisEdgeR = new Vector2 (chasisCollider.size.x/2,0);
+		chasisEdgeL = new Vector2 (-chasisEdgeR.x,0);
+
 		Assemble ();
 	}
 
@@ -50,8 +54,6 @@ public class RailroadCar : G1MonoBehaviour {
 	}
 
 	void AssembleWheels(){
-		float chasisMaxX = chasisCollider.size.x/2;
-		float chasisMinX = -chasisMaxX;
 		 
 		float x = 0;
 		float y = 0;
@@ -67,12 +69,12 @@ public class RailroadCar : G1MonoBehaviour {
 			wheelGOs[i] = wheelGO;
 
 			if (i== 0)  {
-				x = chasisMaxX - wheelR - body.offsetX;
+				x = chasisEdgeR.x - wheelR - body.offsetX;
 				spacing = wheelR*1.0f;
 			}
 
 			if (i == 2){
-				x = chasisMinX + 3*wheelR + spacing + body.offsetX;
+				x = chasisEdgeL.x + 3*wheelR + spacing + body.offsetX;
 			}
 
 			wheelGO.transform.parent = transform;
@@ -150,7 +152,8 @@ public class RailroadCar : G1MonoBehaviour {
 			nextCarAngle = planet.GetAngleByDistance (angleRef, distanceBetweenCars);
 		}else{
 			nextCarAngle = planet.GetAngleByDistance (angleRef, -distanceBetweenCars);
-			nextCarGO.transform.localScale= new Vector3(-1,1,1);
+//			nextCarGO.transform.localScale= new Vector3(-1,1,1);
+			//mask body skin scale.x = -1 , most situation is for lomotive
 		}
 		
 //		Debug.Log ("nextCarAngle:" + nextCarAngle);
@@ -161,18 +164,20 @@ public class RailroadCar : G1MonoBehaviour {
 //		couplerGO.transform.parent = transform.parent;
 		nextCarGO.transform.parent = transform.parent;
 
-//		if (headRight) {
-//			//connet couplers
-//			couplerJoint.enabled = true;
-//			couplerJoint.connectedBody = nextCar.rigidbody2D;
-//			couplerJoint.connectedAnchor = couplerHole;
-//		}else{
-//			couplerJoint.enabled = true;
-//			couplerJoint.connectedBody = nextCar.rigidbody2D;
-//			couplerJoint.connectedAnchor = couplerHole;
-//		}
+		couplerJoint.enabled = true;
+		couplerJoint.connectedBody = nextCar.rigidbody2D;
+		if (headRight) {
+			//connet coupler
+			couplerJoint.anchor = new Vector2(chasisEdgeL.x,0);
+			couplerJoint.connectedAnchor = new Vector2(chasisEdgeR.x,0);
+		}else{
+			couplerJoint.anchor = new Vector2(chasisEdgeR.x,0);
+			couplerJoint.connectedAnchor = new Vector2(chasisEdgeL.x,0);
+		}
 
 		return nextCar;
 	}
 
 }
+
+

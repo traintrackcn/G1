@@ -7,7 +7,7 @@ public class Train : G1MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		SetLocomotive ("Train/RailroadCar", 90, true);
+		SetLocomotive ("Train/RailroadCar", 90, false);
 
 		for (int i=0; i<10; i++) {
 						SetCar ("Train/RailroadCar");
@@ -32,8 +32,7 @@ public class Train : G1MonoBehaviour {
 		cameraM.target = carGO;
 
 		if (!headRight) {
-//						car.transform.localScale = new Vector3 (-1, 1, 1);	
-//			l.f = -10;
+			l.f = -1;
 		} else {
 			l.f = 1;
 		}
