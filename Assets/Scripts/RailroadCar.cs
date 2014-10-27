@@ -3,19 +3,107 @@ using System.Collections;
 
 public class RailroadCar : G1MonoBehaviour {
 
-	public BoxCollider2D mainCollider;
-	public Rigidbody2D mainRigidbody;
+	public BoxCollider2D chasisCollider;
+	public BoxCollider2D bodyCollider;
 	public DistanceJoint2D couplerJoint;
-	public GameObject mainBodyGO;
+
 	public Vector2 couplerHole;
-	public float landToCenter;
+
+	public Object wheelPrefab;
+	public float wheelR;
+	public Object bodyPrefab;
+	
+	public GameObject[] wheelGOs;
+	public GameObject bodyGO;
 
 	public bool headRight;
 
 	new void Awake(){
 		base.Awake ();
-		couplerHole  = new Vector2(mainCollider.size.x/2.0f,0);
+		chasisCollider = GetComponent<BoxCollider2D> ();
+		couplerJoint = GetComponent<DistanceJoint2D> ();
+		couplerHole  = new Vector2(chasisCollider.size.x/2.0f,0);
+		Assemble ();
 	}
+
+	//assemblers
+	void Assemble(){
+		AssembleBody ();
+		AssembleWheels ();
+	}
+
+	void AssembleBody(){
+		float x = 0;
+		float y = 0;
+
+		GameObject bodyGO = Instantiate(bodyPrefab) as GameObject;
+		bodyCollider = bodyGO.GetComponent<BoxCollider2D> ();
+		RailroadCarBody body = bodyGO.GetComponent<RailroadCarBody> ();
+
+		y = chasisCollider.size.y / 2.0f + bodyCollider.size.y / 2.0f + body.offsetY;
+
+		bodyGO.transform.parent = transform;
+		bodyGO.transform.localPosition = new Vector2(x,y);
+	}
+
+	void AssembleWheels(){
+		float chasisMaxX = chasisCollider.size.x/2;
+		float chasisMinX = -chasisMaxX;
+		 
+		float x = 0;
+		float y = 0;
+		float spacing = 0;
+		int num = 4;
+	
+		wheelGOs = new GameObject[num];
+		for (int i=0; i<num; i++) {
+			GameObject wheelGO = Instantiate(wheelPrefab) as GameObject;
+			CircleCollider2D wheelCollider = wheelGO.GetComponent<CircleCollider2D>();
+			wheelR = wheelCollider.radius;
+
+			wheelGOs[i] = wheelGO;
+
+			if (i== 0)  {
+				x = chasisMaxX - wheelR;
+				spacing = wheelR*1.0f;
+			}
+
+			if (i == 2){
+				x = chasisMinX + 3*wheelR + spacing;
+			}
+
+			wheelGO.transform.parent = transform;
+			wheelGO.transform.localPosition = new Vector2(x,y);
+			wheelGO.rigidbody2D.mass = 1;
+
+			//create wheel joint
+			WheelJoint2D joint = gameObject.AddComponent<WheelJoint2D>();
+			joint.anchor = new Vector2(x, y);
+
+			JointSuspension2D suspension = new JointSuspension2D();
+			suspension.frequency = 100;
+			suspension.dampingRatio = .7f;
+			suspension.angle = 90.0f;
+
+			joint.suspension = suspension;
+			joint.connectedBody = wheelGO.rigidbody2D;
+
+			//next wheel parameters
+			x -= spacing + wheelR*2;
+
+		}
+	}
+
+//	public void ApplySkins(){
+//		//body
+//		this.ApplySkin (gameObject, bodySkinPrefab);
+//
+//		//wheels
+//		for (int i=0; i<wheelGOs.Length; i++) {
+//			GameObject wheelGO = wheelGOs[i];
+//			this.ApplySkin(wheelGO, wheelSkinPrefab);
+//		}
+//	}
 
 	// Use this for initialization
 	void Start () {
@@ -27,13 +115,7 @@ public class RailroadCar : G1MonoBehaviour {
 	
 	}
 
-	public GameObject[] wheels{
-		get{
-			return null;
-		}
-	}
-
-
+	
 	public void Brake(){
 	}
 
@@ -56,7 +138,7 @@ public class RailroadCar : G1MonoBehaviour {
 		RailroadCar nextCar = nextCarGO.GetComponent<RailroadCar> ();
 		nextCar.headRight = headRight;
 
-		float distanceBetweenCars = mainCollider.size.x/2 + nextCar.mainCollider.size.x/2 + couplerJoint.distance;
+		float distanceBetweenCars = bodyCollider.size.x/2 + nextCar.bodyCollider.size.x/2 + couplerJoint.distance;
 
 		//angle
 		float nextCarAngle = planet.GetAngleByDistance (angleRef, distanceBetweenCars);
@@ -71,21 +153,21 @@ public class RailroadCar : G1MonoBehaviour {
 //		Debug.Log ("nextCarAngle:" + nextCarAngle);
 
 //		planet.Set (couplerGO, couplerAngle, .1f);
-		planet.Set ( nextCarGO , nextCarAngle, landToCenter);
+		planet.Set ( nextCarGO , nextCarAngle, wheelR);
 
 //		couplerGO.transform.parent = transform.parent;
 		nextCarGO.transform.parent = transform.parent;
 
-		if (headRight) {
-			//connet couplers
-			couplerJoint.enabled = true;
-			couplerJoint.connectedBody = nextCar.mainRigidbody;
-			couplerJoint.connectedAnchor = couplerHole;
-		}else{
-			couplerJoint.enabled = true;
-			couplerJoint.connectedBody = nextCar.mainRigidbody;
-			couplerJoint.connectedAnchor = couplerHole;
-		}
+//		if (headRight) {
+//			//connet couplers
+//			couplerJoint.enabled = true;
+//			couplerJoint.connectedBody = nextCar.rigidbody2D;
+//			couplerJoint.connectedAnchor = couplerHole;
+//		}else{
+//			couplerJoint.enabled = true;
+//			couplerJoint.connectedBody = nextCar.rigidbody2D;
+//			couplerJoint.connectedAnchor = couplerHole;
+//		}
 
 		return nextCar;
 	}

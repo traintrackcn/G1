@@ -24,8 +24,7 @@ public class PlayerController : MonoBehaviour {
 	// Use this for initialization
 	public void Start () {
 		animator = GetComponent<Animator> ();
-		gameObject.AddComponent<Planetary2D>();
-		planetary2d = GetComponent<Planetary2D>();
+		planetary2d = gameObject.AddComponent<Planetary2D>();
 		planetary2d.fixedAngle = true;
 	}
 	

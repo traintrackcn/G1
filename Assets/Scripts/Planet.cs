@@ -8,9 +8,14 @@ public class Planet : G1MonoBehaviour {
 	protected float c = 2 * Mathf.PI *22.4f;
 
 
-//	void Awake(){
-//		base.Awake ();
-//	}
+	new void Awake(){
+		base.Awake ();
+			Debug.Log ("r->" + r);
+		c = 2 * Mathf.PI * r;
+	}
+
+
+
 	// Use this for initialization
 	void Start () {
 		AssembleSolidSurface ();
@@ -45,16 +50,20 @@ public class Planet : G1MonoBehaviour {
 	//for test purpose
 	void AssembleSolidSurface(){
 		for (int angle =0; angle<=359; angle++) {
-			GameObject obj = resourceM.Create("Land");
+			GameObject obj = resourceM.Create("Planet/PlanetLand");
 			BoxCollider2D collider = obj.GetComponent<BoxCollider2D> ();
 
 			float wActual = c / 360.0f;
-			float hActural = .1f;
+			float hActural = .2f;
 			
 			float xScale = wActual / collider.size.x;
 			float yScale = hActural / collider.size.y;
+
+//			Debug.Log("xScale:"+xScale+" yScale:"+yScale);
 			
 			float heightFromBottomToCenter = -hActural/2.0f;
+
+			obj.transform.localScale = new Vector2 (xScale, yScale);
 
 			this.Set(obj,(float)angle,heightFromBottomToCenter);
 
@@ -65,7 +74,7 @@ public class Planet : G1MonoBehaviour {
 
 
 
-			obj.transform.localScale = new Vector2 (xScale, yScale);
+
 
 			obj.name = "Land-"+angle;
 			obj.transform.parent = transform;
