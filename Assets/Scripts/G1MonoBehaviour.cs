@@ -6,7 +6,7 @@ public class G1MonoBehaviour : MonoBehaviour {
 
 	protected PlanetManager planetM;
 	protected ResourceManager resourceM;
-	protected Camera cameraM;
+	protected G1Camera cameraM;
 
 	private GameObject m;
 	private GameObject cameraGO;
@@ -23,7 +23,7 @@ public class G1MonoBehaviour : MonoBehaviour {
 
 		cameraGO = GameObject.Find ("Camera");
 		if (m != null) {
-			cameraM = cameraGO.GetComponent<Camera> ();
+			cameraM = cameraGO.GetComponent<G1Camera> ();
 		}
 
 	}

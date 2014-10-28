@@ -7,11 +7,15 @@ public class Train : G1MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		SetLocomotive ("Train/RailroadCar", 90, false);
 
-		for (int i=0; i<10; i++) {
-						SetCar ("Train/RailroadCar");
-				}
+	}
+
+	public void Assemble(float angle, int carNum, bool headRight){
+		SetLocomotive ("Train/RailroadCar", angle, headRight);
+		
+		for (int i=0; i<carNum; i++) {
+			SetCar ("Train/RailroadCar");
+		}
 	}
 	
 	// Update is called once per frame
