@@ -12,6 +12,9 @@ public class Planet : G1MonoBehaviour {
 		base.Awake ();
 		defaultC = 2 * Mathf.PI * defaultR;
 
+		//update radius of planet collider
+		CircleCollider2D bodyCollider = GetComponent<CircleCollider2D>();
+		bodyCollider.radius = defaultR;
 		//set skin scale
 
 //		Debug.Log ("defaulR:" + defaultR);
@@ -32,7 +35,7 @@ public class Planet : G1MonoBehaviour {
 /** interal functions **/
 	//for test purpose
 	void AssembleSolidSurface(){
-		for (int i=0; i<20; i++) {
+		for (int i=0; i<2; i++) {
 
 			float targetR = defaultR - i;
 
@@ -160,6 +163,41 @@ public class Planet : G1MonoBehaviour {
 
 	public Vector2 GetPositionAtAngle (float angle){
 		return GetPositionAtAngle(angle, defaultR);
+	}
+
+	public float GetAngleAtPosition (Vector2 pos){
+		float r = Vector2.Distance (pos, transform.position);
+		float offsetY = transform.position.y - pos.y;
+		float offsetX = transform.position.x - pos.x;
+
+//		bool quadrant1 = false;
+//		bool quadrant2 = false;
+//		bool quadrant3 = false;
+//		bool quadrant4 = false;
+
+
+
+		float sin = Mathf.Abs (offsetY / r);
+
+		if (offsetX > 0) {
+			if (offsetY < 0) {
+				sin = -sin;
+			}
+		} else if(offsetX < 0) {
+			if(offsetY > 0){
+				sin = -sin;
+			}
+		}
+
+//		Debug.Log ("r->" + r +"pos.y -> "+pos.y+ " sin->" + sin+"planet.center ->"+transform.position);
+		float angle = AngleOfSin(sin);
+		if (offsetX > 0) {
+			angle += 90;
+		} else {
+			angle -= 90;
+		}
+		Debug.Log ("sin ->"+sin+" angle->" + angle+" offsetX:"+offsetX+" offsetY:"+offsetY);
+		return angle;
 	}
 
 

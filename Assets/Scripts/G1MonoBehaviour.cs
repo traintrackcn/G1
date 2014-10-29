@@ -54,6 +54,10 @@ public class G1MonoBehaviour : MonoBehaviour {
 	}
 
 	public float RadianOfAngle(float angle){
-		return (angle *  Mathf.PI)/180.0f;
+		return (angle *  Mathf.PI)/180;
+	}
+
+	public float AngleOfSin(float sin){
+		return (Mathf.Asin( sin ) * 180) / Mathf.PI;
 	}
 }
