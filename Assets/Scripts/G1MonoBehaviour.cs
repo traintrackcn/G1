@@ -7,6 +7,7 @@ public class G1MonoBehaviour : MonoBehaviour {
 	protected PlanetManager planetM;
 	protected ResourceManager resourceM;
 	protected G1Camera cameraM;
+	protected G1TrainCoordinator trainC;
 
 	private GameObject m;
 	private GameObject cameraGO;
@@ -19,12 +20,15 @@ public class G1MonoBehaviour : MonoBehaviour {
 		if (m != null) {
 			planetM = m.GetComponent<PlanetManager> ();
 			resourceM = m.GetComponent<ResourceManager> ();
+			trainC = m.GetComponent<G1TrainCoordinator>();
 		}
 
 		cameraGO = GameObject.Find ("Camera");
 		if (m != null) {
 			cameraM = cameraGO.GetComponent<G1Camera> ();
 		}
+
+
 
 	}
 

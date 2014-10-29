@@ -35,9 +35,9 @@ public class Planet : G1MonoBehaviour {
 /** interal functions **/
 	//for test purpose
 	void AssembleSolidSurface(){
-		for (int i=0; i<2; i++) {
+		for (int i=0; i<6; i++) {
 
-			float targetR = defaultR - i;
+			float targetR = defaultR - i*.5f;
 
 			if (i == 0) {
 				AssembleSurface (0, 360, targetR);
@@ -92,10 +92,10 @@ public class Planet : G1MonoBehaviour {
 			
 			
 			PhysicsMaterial2D m = new PhysicsMaterial2D ();
-			m.friction = .9f;
+			m.friction = .3f;
 			collider.sharedMaterial = m;
 			
-			obj.name = "Land-"+angle+"-r"+r;
+			obj.name = "r"+r+"-"+angle;
 			obj.transform.parent = transform;
 		}
 	}
@@ -196,7 +196,7 @@ public class Planet : G1MonoBehaviour {
 		} else {
 			angle -= 90;
 		}
-		Debug.Log ("sin ->"+sin+" angle->" + angle+" offsetX:"+offsetX+" offsetY:"+offsetY);
+//		Debug.Log ("sin ->"+sin+" angle->" + angle+" offsetX:"+offsetX+" offsetY:"+offsetY);
 		return angle;
 	}
 

@@ -32,9 +32,6 @@ public class Train : G1MonoBehaviour {
 		car.headRight = headRight;
 		carGO.name = "Locomotive";
 
-
-		cameraM.target = carGO;
-
 		if (!headRight) {
 			l.f = -10;
 			car.body.skin.transform.localScale = new Vector3(-1,1,1);
