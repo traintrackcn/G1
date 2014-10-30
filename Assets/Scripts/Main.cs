@@ -21,7 +21,7 @@ public class Main : G1MonoBehaviour {
 		for (int i=0; i<3; i++) {
 						GameObject trainGO = resourceM.Create ("Train/Train");
 						Train train = trainGO.GetComponent<Train> ();
-						train.Assemble (45*i, 2, false);
+						train.Assemble (45*i, 2, true);
 			trainC.AddItem(trainGO);
 		}
 //		planetM.defaultPlanet.Set (trainGO, 0);
