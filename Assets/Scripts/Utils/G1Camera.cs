@@ -62,6 +62,7 @@ public class G1Camera : G1MonoBehaviour {
 		float from = cameraNormalAngle;
 		float to = targetNormalAngle;
 
+		//refine when switching between quandant1 -> quandant4
 		if ((to < 90 && from > 270)) {
 //			Debug.Log ("from -> " + from + " to:" + to);
 			to += 360;
