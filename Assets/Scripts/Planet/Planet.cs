@@ -6,6 +6,11 @@ public class Planet : G1MonoBehaviour {
 
 	public float defaultR = 22.4f;
 	protected float defaultC = 2 * Mathf.PI *22.4f;
+	public GameObject skin;
+	public GameObject atomsphere;
+
+	public float[] atomsphereScales = new float[5]; // early morning, morning, noon , afternoon , night
+	private int targetAtomsphereScaleIndex = 4;
 
 
 	new void Awake(){
@@ -20,6 +25,18 @@ public class Planet : G1MonoBehaviour {
 //		Debug.Log ("defaulR:" + defaultR);
 //		Transform skinTransform = transform.GetChild (0);
 //		skinTransform.localScale = new Vector2 (defaultR*2, defaultR*2);
+
+		atomsphereScales [0] = 80;
+		atomsphereScales [1] = 100;
+		atomsphereScales [2] = 120;
+		atomsphereScales [3] = 50;
+		atomsphereScales [4] = 30;
+
+		//adjust atomsphere 
+
+		float atomsphereR = 10.24f;
+		float scale = (defaultR + 10.0f) / atomsphereR;
+		atomsphere.transform.localScale = new Vector2 (scale * 2, scale * 2);
 	}
 
 
@@ -35,56 +52,69 @@ public class Planet : G1MonoBehaviour {
 /** interal functions **/
 	//for test purpose
 	void AssembleSolidSurface(){
-		for (int i=0; i<6; i++) {
 
-			float targetR = defaultR - i*.5f;
+		float targetR = defaultR;
+		float unitSideLength;
+		for (int i=0; i<2; i++) {
 
-			if (i == 0) {
-				AssembleSurface (0, 360, targetR);
+			if (i==0){
+//				blockPrefabName = "PlanetGrassBlock";
+				unitSideLength = AssembleUnits(0,90, targetR, "PlanetGrassBlock");
+				unitSideLength = AssembleUnits(90,180, targetR, "PlanetMudBlock");
+				unitSideLength = AssembleUnits(180,360, targetR, "PlanetRockBlock");
 			}else{
-				AssembleMud(0,360, targetR);
+				unitSideLength = AssembleUnits(0,360, targetR, "PlanetMudBlock");
 			}
 
+			targetR -= unitSideLength;
+
+//			Debug.Log("targetR -> "+targetR);
+//			if (targetR < 50) break;
 		}
+
+		//scale planet skin
+		float skinR = 10.24f;
+		float offsetH = 1.0f; //cover low ploygon mud
+		float skinScale = (targetR+ offsetH) / skinR; //10.24
+//		Debug.Log ("skinScale -> " + skinScale);
+		skin.transform.localScale = new Vector2 (skinScale * 2, skinScale * 2);
 	}
 
-
-
-	public void AssembleSurface(int fromNormalAngle, int toNormalAngle, float r){
-		AssembleUnits (fromNormalAngle, toNormalAngle, r, "PlanetLand");
-	}
-
-	public void AssembleMud(int fromNormalAngle, int toNormalAngle, float r){
-		AssembleUnits (fromNormalAngle, toNormalAngle, r, "PlanetMud");
-	}
-
-
-	public void AssembleUnits(int fromNormalAngle, int toNormalAngle, float r, string prefabName){
+	
+	public float AssembleUnits(int fromNormalAngle, int toNormalAngle, float r, string prefabName){
 		float landNum = toNormalAngle - fromNormalAngle;
 		float c = 2 * Mathf.PI * r * (landNum/360);
-		float wActual = c / landNum;
-		float hActural = 1.0f;
+
+		float normalAnglesPerUnit = .5f;
+
+
+		if (r != defaultR) {
+			normalAnglesPerUnit = 10;
+//			sideLen = 10.0f;
+		}
+
+		float sideLen = (c / landNum) * normalAnglesPerUnit;
+
+//		float sideLen = (c / landNum) * normalAnglesPerUnit;
+
 
 //		Debug.Log ("landNum:" + landNum + " wActural:" + wActual);
 
-		for (int angle = fromNormalAngle; angle < toNormalAngle; angle++) {
+		for (float angle = fromNormalAngle; angle < toNormalAngle; angle=angle+.5f) {
 
-//			if (angle%10==0){
-//				Vector2 pos = GetPositionAtAngle(angle, r);
-//				GameObject keyPoint = resourceM.Create("Planet/PlanetKeyPoint");
-//				keyPoint.transform.position = pos;
-//				keyPoint.transform.parent = transform;
-//			}
+			if (angle%normalAnglesPerUnit!=0)continue;
+
+			
 
 			GameObject obj = resourceM.Create("Planet/"+prefabName);
 			BoxCollider2D collider = obj.GetComponent<BoxCollider2D> ();
 
-			float xScale = wActual / collider.size.x;
-			float yScale = hActural / collider.size.y;
+			float xScale = sideLen / collider.size.x;
+			float yScale = sideLen / collider.size.y;
 			
 //			Debug.Log("xScale:"+xScale+" yScale:"+yScale);
 			
-			float heightFromBottomToCenter = -hActural/2.0f;
+			float heightFromBottomToCenter = -sideLen/2.0f;
 			
 			obj.transform.localScale = new Vector2 (xScale, yScale);
 			
@@ -98,9 +128,27 @@ public class Planet : G1MonoBehaviour {
 			obj.name = "r"+r+"-"+angle;
 			obj.transform.parent = transform;
 		}
+
+		return sideLen;
 	}
 
-	
+
+//	void FixedUpdate(){
+//		float targetAtomspereScale = atomsphereScales [targetAtomsphereScaleIndex];
+//		float scale = Mathf.Lerp (atomsphere.transform.localScale.x,targetAtomspereScale, Time.deltaTime);
+//		atomsphere.transform.localScale = new Vector2 (scale, scale);
+//
+//		Debug.Log ("Mathf.FloorToInt(scale) -> " + Mathf.FloorToInt(scale));
+//		if (Mathf.FloorToInt(scale) == 30) {
+//			targetAtomsphereScaleIndex = 2;
+//		}
+//
+//		if (Mathf.FloorToInt (scale) == 119) {
+//			targetAtomsphereScaleIndex = 4;
+//		}
+//
+//	}
+
 
 	// Update is called once per frame
 	void Update () {

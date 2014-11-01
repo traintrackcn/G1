@@ -63,18 +63,18 @@ public class G1Camera : G1MonoBehaviour {
 		float to = targetNormalAngle;
 
 		//refine when switching between quandant1 -> quandant4
-		if ((to < 90 && from > 270)) {
-//			Debug.Log ("from -> " + from + " to:" + to);
-			to += 360;
-		}else if ((from < 90 && to > 270)) {
-//			Debug.Log ("from -> " + from + " to:" + to);
-			from += 360;
-		}
+//		if ((to < 90 && from > 270)) {
+////			Debug.Log ("from -> " + from + " to:" + to);
+//			to += 360;
+//		}else if ((from < 90 && to > 270)) {
+////			Debug.Log ("from -> " + from + " to:" + to);
+//			from += 360;
+//		}
 
 //		Debug.Log ("cameraNormalAngle -> "+ cameraNormalAngle+" targetNormalAngle ->"+targetNormalAngle);
 //		Debug.Log ("from -> " + from + " to:" + to);
 	
-		float normalAngle = Mathf.Lerp(from, to, Time.deltaTime*3);
+		float normalAngle = Mathf.LerpAngle(from, to, Time.deltaTime*3);
 		
 		transform.localRotation = Quaternion.Euler(0,0,normalAngle-90);
 		
