@@ -91,7 +91,7 @@ public class G1Camera : G1MonoBehaviour {
 	}
 	
 	void ZoomOut(){
-		if (targetCameraOrthographicSize + 3 > 30)
+		if (targetCameraOrthographicSize + 3 > 60)
 						return;
 
 		targetCameraOrthographicSize += 3;

@@ -18,10 +18,10 @@ public class Main : G1MonoBehaviour {
 //		}
 
 		//creating a train
-		for (int i=0; i<8; i++) {
+		for (int i=0; i<1; i++) {
 						GameObject trainGO = resourceM.Create ("Train/Train");
 						Train train = trainGO.GetComponent<Train> ();
-						train.Assemble (45*i, 2, false);
+						train.Assemble (90*i, 20, true);
 			trainC.AddItem(trainGO);
 		}
 //		planetM.defaultPlanet.Set (trainGO, 0);

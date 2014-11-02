@@ -6,16 +6,20 @@ public class Planet : G1MonoBehaviour {
 
 	public float defaultR = 22.4f;
 	protected float defaultC = 2 * Mathf.PI *22.4f;
-	public GameObject skin;
-	public GameObject atomsphere;
+//	public GameObject skin;
+	public GameObject atomsphereGO;
+	public SpriteRenderer atomsphereRenderer;
 
-	public float[] atomsphereScales = new float[5]; // early morning, morning, noon , afternoon , night
-	private int targetAtomsphereScaleIndex = 4;
+	protected PlanetSun sun;
+
+
 
 
 	new void Awake(){
 		base.Awake ();
 		defaultC = 2 * Mathf.PI * defaultR;
+
+		sun = GetComponent<PlanetSun> ();
 
 		//update radius of planet collider
 		CircleCollider2D bodyCollider = GetComponent<CircleCollider2D>();
@@ -26,17 +30,14 @@ public class Planet : G1MonoBehaviour {
 //		Transform skinTransform = transform.GetChild (0);
 //		skinTransform.localScale = new Vector2 (defaultR*2, defaultR*2);
 
-		atomsphereScales [0] = 80;
-		atomsphereScales [1] = 100;
-		atomsphereScales [2] = 120;
-		atomsphereScales [3] = 50;
-		atomsphereScales [4] = 30;
-
 		//adjust atomsphere 
 
 		float atomsphereR = 10.24f;
-		float scale = (defaultR + 10.0f) / atomsphereR;
-		atomsphere.transform.localScale = new Vector2 (scale * 2, scale * 2);
+//		float offsetR = 10.0f; //white part of atomsphere
+		float scale = (defaultR + defaultR) / atomsphereR;
+		atomsphereGO.transform.localScale = new Vector2 (scale * 2, scale * 2);
+
+		atomsphereRenderer = atomsphereGO.GetComponent<SpriteRenderer> ();
 	}
 
 
@@ -47,7 +48,10 @@ public class Planet : G1MonoBehaviour {
 	}
 
 
-
+	void Update(){
+		atomsphereRenderer.color = sun.color;
+//		Debug.Log ("atomsphereRenderer.color -> " + atomsphereRenderer.color);
+	}
 
 /** interal functions **/
 	//for test purpose
@@ -59,11 +63,11 @@ public class Planet : G1MonoBehaviour {
 
 			if (i==0){
 //				blockPrefabName = "PlanetGrassBlock";
-				unitSideLength = AssembleUnits(0,90, targetR, "PlanetGrassBlock");
-				unitSideLength = AssembleUnits(90,180, targetR, "PlanetMudBlock");
-				unitSideLength = AssembleUnits(180,360, targetR, "PlanetRockBlock");
+				unitSideLength = AssembleUnits(0,360, targetR, "PlanetGrassBlock",.5f);
+//				unitSideLength = AssembleUnits(90,180, targetR, "PlanetMudBlock",.5f);
+//				unitSideLength = AssembleUnits(180,360, targetR, "PlanetRockBlock",.5f);
 			}else{
-				unitSideLength = AssembleUnits(0,360, targetR, "PlanetMudBlock");
+				unitSideLength = AssembleUnits(0,360, targetR, "PlanetMudBlock",10.0f);
 			}
 
 			targetR -= unitSideLength;
@@ -73,25 +77,25 @@ public class Planet : G1MonoBehaviour {
 		}
 
 		//scale planet skin
-		float skinR = 10.24f;
-		float offsetH = 1.0f; //cover low ploygon mud
-		float skinScale = (targetR+ offsetH) / skinR; //10.24
+//		float skinR = 10.24f;
+//		float offsetH = 1.0f; //cover low ploygon mud
+//		float skinScale = (targetR+ offsetH) / skinR; //10.24
 //		Debug.Log ("skinScale -> " + skinScale);
-		skin.transform.localScale = new Vector2 (skinScale * 2, skinScale * 2);
+//		skin.transform.localScale = new Vector2 (skinScale * 2, skinScale * 2);
 	}
 
 	
-	public float AssembleUnits(int fromNormalAngle, int toNormalAngle, float r, string prefabName){
+	public float AssembleUnits(int fromNormalAngle, int toNormalAngle, float r, string prefabName, float normalAnglesPerUnit){
 		float landNum = toNormalAngle - fromNormalAngle;
 		float c = 2 * Mathf.PI * r * (landNum/360);
 
-		float normalAnglesPerUnit = .5f;
+//		float normalAnglesPerUnit = .5f;
 
 
-		if (r != defaultR) {
-			normalAnglesPerUnit = 10;
-//			sideLen = 10.0f;
-		}
+//		if (r != defaultR) {
+//			normalAnglesPerUnit = 10;
+////			sideLen = 10.0f;
+//		}
 
 		float sideLen = (c / landNum) * normalAnglesPerUnit;
 
@@ -151,9 +155,9 @@ public class Planet : G1MonoBehaviour {
 
 
 	// Update is called once per frame
-	void Update () {
+//	void Update () {
 //		Debug.DrawLine(transform.position, new Vector3(transform.position.x, transform.position.y + 20, 0), Color.blue);
-	}
+//	}
 
 	
 /** set ops **/
