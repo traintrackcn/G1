@@ -9,7 +9,7 @@ public class Main : G1MonoBehaviour {
 //		Debug.Log ("planetM:"+planetM);
 //		int num = 40;
 //		float offset = 360 / num;
-//		float angle = 0;
+//		float angle =q 0;
 //		for (int i =0; i<num; i++) {
 //			GameObject carGO = resourceM.Create ("Car");
 //			planetM.defaultPlanet.Set (carGO, angle, .25f);
@@ -17,13 +17,15 @@ public class Main : G1MonoBehaviour {
 //			angle += offset;
 //		}
 
+
 		//creating a train
 		for (int i=0; i<1; i++) {
 						GameObject trainGO = resourceM.Create ("Train/Train");
 						Train train = trainGO.GetComponent<Train> ();
-						train.Assemble (90*i, 20, true);
+						train.Assemble (90*i, 3, true);
 			trainC.AddItem(trainGO);
 		}
+
 //		planetM.defaultPlanet.Set (trainGO, 0);
 
 

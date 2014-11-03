@@ -12,8 +12,8 @@ public class PlanetSun : MonoBehaviour {
 
 	void Awake(){
 
-		colors[0] = new Color (139.0f/255.0f,175.0f/255.0f,225.0f/255.0f);
-		colors[1] = new Color (202.0f/255.0f, 225.0f/255.0f, 255.0f/255.0f);
+		colors[0] = new Color (162.0f/255.0f, 179.0f/255.0f, 201.0f/255.0f);
+		colors[1] = new Color (139.0f/255.0f,175.0f/255.0f,225.0f/255.0f);
 		colors[2] = new Color (201.0f/255.0f,98.0f/255.0f,43.0f/255.0f);
 		colors[3] = new Color (7.0f/255.0f,28.0f/255.0f,50.0f/255.0f);
 

@@ -17,6 +17,7 @@ public class Player : MonoBehaviour {
 		rigidbody2D.gravityScale = 0; 
 		rigidbody2D.drag = .3f;
 		rigidbody2D.fixedAngle = true;
+
 	}
 
 	// Update is called once per frame
@@ -25,12 +26,14 @@ public class Player : MonoBehaviour {
 	}
 
 
-//	void OnTriggerEnter2D(Collider2D target){
-//		Debug.Log (target);
-//	}
-//
-//	void OnCollisionEnter2D(Collider2D target){
-//		Debug.Log (target);
-//	}
+	void OnCollisionEnter2D(Collision2D collission) {
+//		GameObject targetGO = collission.gameObject;
+//		if (targetGO.tag == "Vehicle") {
+////			coll.gameObject.SendMessage("ApplyDamage", 10);
+//			Debug.Log("Collide vehicle");
+//			Debug.Log("targetGO.collider2D -> "+targetGO.collider2D+" gameObject.collider2D -> "+gameObject.collider2D);
+//			Physics2D.IgnoreCollision (targetGO.collider2D, gameObject.collider2D);
+//		}
+	}
 
 }
