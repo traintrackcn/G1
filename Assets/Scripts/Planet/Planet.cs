@@ -60,18 +60,8 @@ public class Planet : G1MonoBehaviour {
 		float targetR = defaultR;
 		float unitSideLength;
 		for (int i=0; i<1; i++) {
-
-			if (i==0){
-//				blockPrefabName = "PlanetGrassBlock";
-				unitSideLength = AssembleBlocks(0,360, targetR, "Planet/PlanetGrassBlock",.5f);
-//				unitSideLength = AssembleUnits(90,180, targetR, "PlanetMudBlock",.5f);
-//				unitSideLength = AssembleUnits(180,360, targetR, "PlanetRockBlock",.5f);
-			}else{
-				unitSideLength = AssembleBlocks(0,360, targetR, "Planet/PlanetMudBlock",10.0f);
-			}
-
+			unitSideLength = AssembleBlocks(0,360, targetR, "Planet/PlanetGrassBlock",0.5f);
 			targetR -= unitSideLength;
-
 //			Debug.Log("targetR -> "+targetR);
 //			if (targetR < 50) break;
 		}
@@ -94,50 +84,43 @@ public class Planet : G1MonoBehaviour {
 		float xScale = 1.0f;
 		float yScale = 1.0f + Random.value;
 
-		Debug.Log ("Random.value -> "+Random.value);
+//		Debug.Log ("Random.value -> "+Random.value);
 
 		float landToCenter = (collider.size.y*yScale)/2.0f;
 		obj.transform.localScale = new Vector2 (xScale, yScale);
 		Set(obj,(float)normalAngle,r,landToCenter);
 		obj.transform.parent = transform;
 	}
+
+
+	public float AssembleBlocks(float fromNormalAngle, float toNormalAngle, float r, string prefabName, int blockNum){
+		float c = 2 * Mathf.PI * r;
+		float sideLen = c / blockNum;
+		AssembleBlocks (fromNormalAngle, toNormalAngle, r, prefabName, sideLen);
+		return sideLen;
+	}
 	
-	public float AssembleBlocks(int fromNormalAngle, int toNormalAngle, float r, string prefabName, float normalAnglesPerUnit){
-		float blockNum = toNormalAngle - fromNormalAngle;
-		float c = 2 * Mathf.PI * r * (blockNum/360);
+	public float AssembleBlocks(float fromNormalAngle, float toNormalAngle, float r, string prefabName, float sideLen){
+//		float c = 2 * Mathf.PI * r;
+		float angleOffset = GetNormalAngleByDistance (0, sideLen);
 
-		float sideLen = (c / blockNum) * normalAnglesPerUnit;
-
-		for (float angle = fromNormalAngle; angle < toNormalAngle; angle=angle+.5f) {
-
-			if (angle%normalAnglesPerUnit!=0)continue;
-
-			
-
-			GameObject obj = resourceM.Create(prefabName);
-			BoxCollider2D collider = obj.GetComponent<BoxCollider2D> ();
-
-			float xScale = sideLen / collider.size.x;
-			float yScale = sideLen / collider.size.y;
-			
-//			Debug.Log("xScale:"+xScale+" yScale:"+yScale);
-			
-			float landToCenter = -sideLen/2.0f;
-			
-			obj.transform.localScale = new Vector2 (xScale, yScale);
-			
-			Set(obj,(float)angle,r,landToCenter);
-			
-			
-			PhysicsMaterial2D m = new PhysicsMaterial2D ();
-			m.friction = .3f;
-			collider.sharedMaterial = m;
-			
-			obj.name = "r"+r+"-"+angle;
-			obj.transform.parent = transform;
+		for (float angle = fromNormalAngle; angle < toNormalAngle; angle+=angleOffset) {
+			AssembleBlock(angle, prefabName, r, sideLen);
 		}
 
 		return sideLen;
+	}
+
+	public void AssembleBlock(float normalAngle,string prefabName, float r, float sideLen){
+		GameObject obj = resourceM.Create(prefabName);
+		BoxCollider2D collider = obj.GetComponent<BoxCollider2D> ();
+		float xScale = sideLen / collider.size.x;
+		float yScale = sideLen / collider.size.y;
+		float landToCenter = -sideLen/2.0f;
+		obj.transform.localScale = new Vector2 (xScale, yScale);
+		Set(obj,normalAngle,r,landToCenter);
+		obj.name = "r"+r+"-"+normalAngle;
+		obj.transform.parent = transform;
 	}
 
 
